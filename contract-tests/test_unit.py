@@ -60,6 +60,38 @@ def test_spec_additional_properties_rejected(minimal_spec):
     _fails(validate_normalized_spec, minimal_spec, "Additional properties")
 
 
+def test_spec_test_data_optional(minimal_spec):
+    assert "test_data" not in minimal_spec
+    validate_normalized_spec(minimal_spec)
+
+
+def test_spec_accepts_test_data(minimal_spec):
+    minimal_spec["test_data"] = {
+        "valid_credentials": {"username": "u", "password": "p"},
+        "login_path": "/login",
+    }
+    validate_normalized_spec(minimal_spec)
+
+
+def test_spec_login_fixture_carries_test_data():
+    from conftest import FIXTURES, load_json
+
+    spec = load_json(FIXTURES / "valid" / "login.normalized-spec.json")
+    validate_normalized_spec(spec)
+    assert spec["test_data"]["valid_credentials"]["username"]
+
+
+@pytest.mark.parametrize("value", [{"a": 1}, [], 3, {"a": {"b": "c"}}, None])
+def test_spec_bad_test_data_value(minimal_spec, value):
+    minimal_spec["test_data"] = {"k": value}
+    _fails(validate_normalized_spec, minimal_spec, "at /test_data/k:")
+
+
+def test_spec_test_data_must_be_object(minimal_spec):
+    minimal_spec["test_data"] = ["x"]
+    _fails(validate_normalized_spec, minimal_spec, "at /test_data:", "is not of type 'object'")
+
+
 def test_spec_rejects_non_object():
     _fails(validate_normalized_spec, [], "is not of type 'object'")
 

@@ -18,6 +18,7 @@ REASONS = {
     "spec.bad-source-enum.json": "'slack' is not one of",
     "spec.wrong-schema-version.json": "at /schema_version:",
     "spec.bad-scenario-type.json": "'happy' is not one of",
+    "spec.bad-test-data-shape.json": "at /test_data/valid_credentials:",
     "tc.missing-step-expected.json": "'expected' is a required property",
     "tc.wrong-schema-version.json": "at /schema_version:",
     "tc.empty-steps.json": "at /test_cases/0/steps:",

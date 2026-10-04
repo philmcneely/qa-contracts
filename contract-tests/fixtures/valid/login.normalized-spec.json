@@ -52,6 +52,11 @@
       ]
     }
   ],
+  "test_data": {
+    "valid_credentials": { "username": "user@example.com", "password": "correct-password" },
+    "invalid_credentials": { "username": "user@example.com", "password": "wrong-password" },
+    "login_path": "/login"
+  },
   "open_questions": ["Should lockout notify the user by email?"],
   "traceability": { "spec_url": "https://confluence.example.com/display/AUTH/Login", "parent": "EPIC-9" }
 }

@@ -41,6 +41,16 @@
         }
       }
     },
+    "test_data": {
+      "type": "object",
+      "description": "Optional concrete data the spec provides (e.g. credentials), so generated tests use real values instead of placeholders. Each value is a string or a string-to-string object.",
+      "additionalProperties": {
+        "oneOf": [
+          { "type": "string" },
+          { "type": "object", "additionalProperties": { "type": "string" } }
+        ]
+      }
+    },
     "open_questions": { "type": "array", "items": { "type": "string" } },
     "traceability": {
       "type": "object",

@@ -27,6 +27,21 @@ reuse is only valid when the reference's `language` matches the test being
 generated. Use the same value in `manifest.new` and `manifest.reused` for a
 given target.
 
+## Test data in the Normalized Spec
+
+`test_data` is an optional object on the Normalized Spec for concrete data the
+spec provides (credentials, paths, identifiers). The Synthesizer should use
+these values in generated tests instead of inventing placeholders. Each value is
+a string or a string-to-string object; omit the field when the spec has no data.
+
+```json
+"test_data": {
+  "valid_credentials": {"username": "user@example.com", "password": "correct-password"},
+  "invalid_credentials": {"username": "user@example.com", "password": "wrong-password"},
+  "login_path": "/login"
+}
+```
+
 ## Install in a component repo
 
 ```bash

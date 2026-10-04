@@ -92,6 +92,50 @@ def test_spec_test_data_must_be_object(minimal_spec):
     _fails(validate_normalized_spec, minimal_spec, "at /test_data:", "is not of type 'object'")
 
 
+def test_spec_setup_teardown_optional(minimal_spec):
+    assert "setup" not in minimal_spec and "teardown" not in minimal_spec
+    validate_normalized_spec(minimal_spec)
+
+
+@pytest.mark.parametrize("via", ["api", "db", "ui"])
+def test_spec_accepts_setup_teardown(minimal_spec, via):
+    step = {"via": via, "description": "seed", "data": {"token": "${API_TOKEN}", "n": 3}}
+    minimal_spec["setup"] = [step]
+    minimal_spec["teardown"] = [{"via": via, "description": "clean"}]
+    validate_normalized_spec(minimal_spec)
+
+
+def test_spec_login_fixture_carries_setup_teardown():
+    from conftest import FIXTURES, load_json
+
+    spec = load_json(FIXTURES / "valid" / "login.normalized-spec.json")
+    validate_normalized_spec(spec)
+    assert {s["via"] for s in spec["setup"] + spec["teardown"]} == {"api", "db", "ui"}
+
+
+@pytest.mark.parametrize("key", ["setup", "teardown"])
+@pytest.mark.parametrize(
+    "item,fragment",
+    [
+        ({"via": "sms", "description": "x"}, "'sms' is not one of"),
+        ({"description": "x"}, "'via' is a required property"),
+        ({"via": "api"}, "'description' is a required property"),
+        ({"via": "api", "description": ""}, "at /{key}/0/description:"),
+        ({"via": "api", "description": "x", "data": ["a"]}, "at /{key}/0/data:"),
+        ({"via": "api", "description": "x", "extra": 1}, "Additional properties"),
+    ],
+)
+def test_spec_bad_setup_teardown_item(minimal_spec, key, item, fragment):
+    minimal_spec[key] = [item]
+    _fails(validate_normalized_spec, minimal_spec, fragment.format(key=key))
+
+
+@pytest.mark.parametrize("key", ["setup", "teardown"])
+def test_spec_setup_teardown_must_be_array(minimal_spec, key):
+    minimal_spec[key] = {"via": "api", "description": "x"}
+    _fails(validate_normalized_spec, minimal_spec, f"at /{key}:", "is not of type 'array'")
+
+
 def test_spec_rejects_non_object():
     _fails(validate_normalized_spec, [], "is not of type 'object'")
 

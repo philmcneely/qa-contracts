@@ -19,6 +19,8 @@ REASONS = {
     "spec.wrong-schema-version.json": "at /schema_version:",
     "spec.bad-scenario-type.json": "'happy' is not one of",
     "spec.bad-test-data-shape.json": "at /test_data/valid_credentials:",
+    "spec.bad-setup-via.json": "at /setup/0/via:",
+    "spec.bad-teardown-missing-description.json": "'description' is a required property",
     "tc.missing-step-expected.json": "'expected' is a required property",
     "tc.wrong-schema-version.json": "at /schema_version:",
     "tc.empty-steps.json": "at /test_cases/0/steps:",

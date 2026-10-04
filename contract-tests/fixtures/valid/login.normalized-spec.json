@@ -57,6 +57,18 @@
     "invalid_credentials": { "username": "user@example.com", "password": "wrong-password" },
     "login_path": "/login"
   },
+  "setup": [
+    {
+      "via": "api",
+      "description": "Create the registered user used by the login scenarios",
+      "data": { "method": "POST", "path": "/api/users", "body": { "email": "user@example.com", "password": "correct-password" }, "auth": "Bearer ${API_TOKEN}" }
+    },
+    { "via": "db", "description": "Reset the failed-login counter for that user", "data": { "sql_ref": "reset_failed_logins.sql" } }
+  ],
+  "teardown": [
+    { "via": "api", "description": "Delete the registered user", "data": { "method": "DELETE", "path": "/api/users/user@example.com" } },
+    { "via": "ui", "description": "Sign out and clear the session" }
+  ],
   "open_questions": ["Should lockout notify the user by email?"],
   "traceability": { "spec_url": "https://confluence.example.com/display/AUTH/Login", "parent": "EPIC-9" }
 }

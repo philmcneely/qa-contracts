@@ -42,6 +42,24 @@ a string or a string-to-string object; omit the field when the spec has no data.
 }
 ```
 
+## Setup and teardown in the Normalized Spec
+
+`setup` and `teardown` are optional top-level arrays declaring data provisioning
+before the scenarios (seed/reset) and cleanup after them. Each item is
+`{via, description, data?}`: `via` is `api`, `db` or `ui` (the channel), `description`
+is the natural-language intent for the model, and `data` is an optional declarative
+object (payload, params, a SQL file reference). Never put secrets in `data`; use
+env-var placeholders such as `${API_TOKEN}` (as strings). Omit both when the spec
+needs no provisioning.
+
+```json
+"setup": [
+  {"via": "api", "description": "Create the registered user", "data": {"method": "POST", "path": "/api/users", "auth": "Bearer ${API_TOKEN}"}},
+  {"via": "db", "description": "Reset the failed-login counter", "data": {"sql_ref": "reset_failed_logins.sql"}}
+],
+"teardown": [{"via": "ui", "description": "Sign out and clear the session"}]
+```
+
 ## Install in a component repo
 
 ```bash

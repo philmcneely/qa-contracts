@@ -51,11 +51,36 @@
         ]
       }
     },
+    "setup": {
+      "type": "array",
+      "description": "Optional data provisioning to run before the scenarios (seed/reset), declared by intent.",
+      "items": { "$ref": "#/definitions/data_step" }
+    },
+    "teardown": {
+      "type": "array",
+      "description": "Optional cleanup to run after the scenarios, declared by intent.",
+      "items": { "$ref": "#/definitions/data_step" }
+    },
     "open_questions": { "type": "array", "items": { "type": "string" } },
     "traceability": {
       "type": "object",
       "description": "Free-form provenance links, e.g. spec_url, parent.",
       "additionalProperties": { "type": "string" }
+    }
+  },
+  "definitions": {
+    "data_step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["via", "description"],
+      "properties": {
+        "via": { "enum": ["api", "db", "ui"], "description": "Channel the step runs through." },
+        "description": { "type": "string", "minLength": 1, "description": "Natural-language intent, for the model." },
+        "data": {
+          "type": "object",
+          "description": "Declarative payload/params/SQL reference. No secrets: use env placeholders such as ${API_TOKEN} (as strings)."
+        }
+      }
     }
   }
 }

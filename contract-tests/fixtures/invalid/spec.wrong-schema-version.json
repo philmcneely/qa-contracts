@@ -1,0 +1,22 @@
+{
+  "schema_version": "2.0",
+  "ticket_id": "MIN-1",
+  "source": "text",
+  "acceptance_criteria": [
+    {
+      "id": "ac-1",
+      "scenarios": [
+        {
+          "name": "n",
+          "given": [],
+          "when": [
+            "x"
+          ],
+          "then": [
+            "y"
+          ]
+        }
+      ]
+    }
+  ]
+}

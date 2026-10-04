@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "ticket_id": "AUTH-101",
+  "source": "jira",
+  "title": "User login",
+  "mode": "greenfield",
+  "acceptance_criteria": [
+    {
+      "id": "ac-1",
+      "feature": "Login with valid credentials",
+      "scenarios": [
+        {
+          "name": "Registered user logs in",
+          "type": "positive",
+          "given": ["a registered user with email 'user@example.com'", "the user is on the login page"],
+          "when": ["the user submits the correct email and password"],
+          "then": ["the user is redirected to the dashboard", "a session cookie is set"]
+        }
+      ]
+    },
+    {
+      "id": "ac-2",
+      "feature": "Login rejects invalid credentials",
+      "scenarios": [
+        {
+          "name": "Wrong password",
+          "type": "negative",
+          "given": ["a registered user", "the user is on the login page"],
+          "when": ["the user submits a wrong password"],
+          "then": ["an 'Invalid email or password' error is shown", "the user stays on the login page"]
+        },
+        {
+          "name": "Empty email",
+          "type": "negative",
+          "given": ["the user is on the login page"],
+          "when": ["the user submits the form with an empty email"],
+          "then": ["a 'Email is required' validation message is shown"]
+        }
+      ]
+    },
+    {
+      "id": "ac-3",
+      "feature": "Account lockout after repeated failures",
+      "scenarios": [
+        {
+          "name": "Locked on fifth consecutive failure",
+          "type": "boundary",
+          "given": ["a registered user with 4 consecutive failed logins"],
+          "when": ["the user submits a wrong password a fifth time"],
+          "then": ["the account is locked for 15 minutes", "a lockout message is shown"]
+        }
+      ]
+    }
+  ],
+  "open_questions": ["Should lockout notify the user by email?"],
+  "traceability": { "spec_url": "https://confluence.example.com/display/AUTH/Login", "parent": "EPIC-9" }
+}

@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qa-contracts"
+version = "1.0.0"
+description = "Versioned contracts and model-free validators for the QA / test-generation platform"
+requires-python = ">=3.9"
+dependencies = ["jsonschema>=4.18"]
+
+[tool.setuptools]
+packages = ["qa_contracts"]
+
+[tool.setuptools.package-data]
+qa_contracts = ["schemas/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["contract-tests"]
+markers = [
+    "unit: validators accept valid objects and reject invalid ones with correct paths",
+    "integration: every fixture file validates against its schema as expected",
+    "api: public package surface and ContractError shape as a consumer sees it",
+    "e2e: full Normalized Spec -> Test Cases flow incl. traceability",
+]

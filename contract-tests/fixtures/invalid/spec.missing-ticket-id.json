@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "source": "text",
+  "acceptance_criteria": [
+    {
+      "id": "ac-1",
+      "scenarios": [
+        {
+          "name": "n",
+          "given": [],
+          "when": [
+            "x"
+          ],
+          "then": [
+            "y"
+          ]
+        }
+      ]
+    }
+  ]
+}

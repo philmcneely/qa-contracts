@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://qa-platform/contracts/synthesis-result/1.0",
+  "title": "Synthesis Result (Contract 4)",
+  "description": "Output of the Automation Synthesizer, input to the Verify & Promote Runner. manifest.new holds full Steps (promoted on green); manifest.reused holds references to steps already in the Step Library.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "test_file", "manifest", "warnings"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "ticket_id": { "type": "string", "minLength": 1 },
+    "test_file": { "type": "string", "minLength": 1 },
+    "manifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reused", "new"],
+      "properties": {
+        "reused": { "type": "array", "items": { "$ref": "#/definitions/reused_ref" } },
+        "new": { "type": "array", "items": { "$ref": "https://qa-platform/contracts/step/1.0" } }
+      }
+    },
+    "warnings": { "type": "array", "items": { "type": "string" } }
+  },
+  "definitions": {
+    "reused_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["step_id", "kind", "name", "page_object", "intent", "score"],
+      "properties": {
+        "step_id": { "type": "string", "minLength": 1 },
+        "kind": { "enum": ["action", "assertion"] },
+        "name": { "type": "string", "pattern": "^[a-z_][a-z0-9_]*$" },
+        "page_object": { "type": "string", "pattern": "^[A-Z][A-Za-z0-9]*$" },
+        "intent": { "type": "string", "pattern": "\\S" },
+        "score": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    }
+  }
+}

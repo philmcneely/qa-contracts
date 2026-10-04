@@ -1,0 +1,1 @@
+{"kind":"assertion","name":"sees","intent":"sees","page_object":"P","params":["email"],"body":["await expect(self.page).to_have_title('x')"]}

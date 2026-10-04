@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://qa-platform/contracts/test-cases/1.0",
+  "title": "Test Cases (Contract 2)",
+  "description": "Output of the Test-Case Designer, input to the Automation Synthesizer. `covers` holds acceptance-criteria ids from Contract 1.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "ticket_id", "test_cases"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "ticket_id": { "type": "string", "minLength": 1 },
+    "test_cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "title", "steps"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "title": { "type": "string", "minLength": 1 },
+          "preconditions": { "type": "array", "items": { "type": "string" } },
+          "steps": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["action", "expected"],
+              "properties": {
+                "action": { "type": "string", "minLength": 1 },
+                "data": { "type": "object" },
+                "expected": { "type": "string", "minLength": 1 }
+              }
+            }
+          },
+          "tags": { "type": "array", "items": { "type": "string" } },
+          "covers": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "ticket_id": "AUTH-101",
+  "test_cases": [
+    {
+      "id": "tc-1",
+      "title": "Registered user logs in with valid credentials",
+      "preconditions": ["User user@example.com is registered"],
+      "steps": [
+        { "action": "Open the login page", "expected": "Login form is displayed" },
+        {
+          "action": "Submit correct email and password",
+          "data": { "email": "user@example.com", "password": "CorrectHorse1!" },
+          "expected": "User is redirected to the dashboard and a session cookie is set"
+        }
+      ],
+      "tags": ["smoke", "positive"],
+      "covers": ["ac-1"]
+    },
+    {
+      "id": "tc-2",
+      "title": "Wrong password shows an error",
+      "preconditions": ["User user@example.com is registered"],
+      "steps": [
+        {
+          "action": "Submit a wrong password",
+          "data": { "email": "user@example.com", "password": "wrong" },
+          "expected": "'Invalid email or password' is shown and the user stays on the login page"
+        }
+      ],
+      "tags": ["negative"],
+      "covers": ["ac-2"]
+    },
+    {
+      "id": "tc-3",
+      "title": "Empty email is rejected",
+      "steps": [
+        {
+          "action": "Submit the form with an empty email",
+          "data": { "email": "", "password": "anything" },
+          "expected": "'Email is required' validation message is shown"
+        }
+      ],
+      "tags": ["negative"],
+      "covers": ["ac-2"]
+    },
+    {
+      "id": "tc-4",
+      "title": "Account locks on the fifth consecutive failure",
+      "preconditions": ["User user@example.com has 4 consecutive failed logins"],
+      "steps": [
+        {
+          "action": "Submit a wrong password a fifth time",
+          "data": { "email": "user@example.com", "password": "wrong" },
+          "expected": "Account is locked for 15 minutes and a lockout message is shown"
+        }
+      ],
+      "tags": ["boundary", "negative"],
+      "covers": ["ac-3"]
+    }
+  ]
+}

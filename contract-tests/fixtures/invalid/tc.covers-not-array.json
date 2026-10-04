@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "ticket_id": "MIN-1",
+  "test_cases": [
+    {
+      "id": "tc-1",
+      "title": "t",
+      "steps": [
+        {
+          "action": "a",
+          "expected": "e"
+        }
+      ],
+      "covers": "ac-1"
+    }
+  ]
+}

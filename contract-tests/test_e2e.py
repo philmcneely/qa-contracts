@@ -65,3 +65,18 @@ def test_reused_and_new_do_not_overlap(synthesis):
     reused = {(r["page_object"], r["name"]) for r in synthesis["manifest"]["reused"]}
     new = {(s["page_object"], s["name"]) for s in synthesis["manifest"]["new"]}
     assert not reused & new
+
+
+@pytest.fixture(scope="module")
+def ts_synthesis():
+    return load_json(FIXTURES / "valid" / "login-ts.synthesis-result.json")
+
+
+def test_typescript_login_synthesis_result_validates(login, ts_synthesis):
+    _, tcs = login
+    validate_synthesis_result(ts_synthesis)
+    assert ts_synthesis["ticket_id"] == tcs["ticket_id"]
+    for step in ts_synthesis["manifest"]["new"]:
+        validate_step(step)
+        assert step["language"] == "typescript"
+    assert all(r["language"] == "typescript" for r in ts_synthesis["manifest"]["reused"])

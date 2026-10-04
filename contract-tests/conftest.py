@@ -46,6 +46,11 @@ def login_step():
 
 
 @pytest.fixture
+def login_ts_step():
+    return load_json(FIXTURES / "valid" / "login-ts.step.json")
+
+
+@pytest.fixture
 def minimal_sr():
     return load_json(FIXTURES / "valid" / "minimal.synthesis-result.json")
 

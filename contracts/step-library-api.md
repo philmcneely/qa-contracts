@@ -16,6 +16,7 @@ Transport TBD (HTTP/gRPC); must be language-agnostic.
 `promote.step` (request) and every `search[].step` (response) are a **Step** as
 defined by `qa_contracts/schemas/step.schema.json` (validate with
 `qa_contracts.validate_step`): `kind` (`action`|`assertion`), `name`, `intent`,
+`language` (`python`|`typescript`|`javascript`, the language of `body`),
 `page_object`, optional `params`, and `body`. The same Step is what the
 Synthesizer lists in `manifest.new` (Contract 4,
 `qa_contracts/schemas/synthesis-result.schema.json`).

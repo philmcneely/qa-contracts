@@ -1,1 +1,1 @@
-{"kind":"action","name":"SubmitCreds","intent":"go","page_object":"P","body":["await self.page.click('x')"]}
+{"kind": "action", "name": "SubmitCreds", "intent": "go", "page_object": "P", "body": ["await self.page.click('x')"], "language": "python"}

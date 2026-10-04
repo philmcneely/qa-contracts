@@ -1,0 +1,1 @@
+{"kind": "action", "name": "submit_credentials", "intent": "Submit email and password", "page_object": "LoginPage", "params": ["email", "password"], "body": ["await self.page.get_by_label('Email').fill(email)", "await self.page.get_by_label('Password').fill(password)", "await self.page.get_by_role('button', name='Sign in').click()"]}

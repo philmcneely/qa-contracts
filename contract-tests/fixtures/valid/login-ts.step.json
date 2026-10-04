@@ -1,0 +1,16 @@
+{
+  "kind": "action",
+  "language": "typescript",
+  "name": "submit_credentials",
+  "intent": "Submit email and password",
+  "page_object": "LoginPage",
+  "params": [
+    "email",
+    "password"
+  ],
+  "body": [
+    "await this.page.getByLabel('Email').fill(email);",
+    "await this.page.getByLabel('Password').fill(password);",
+    "await this.page.getByRole('button', { name: 'Sign in' }).click();"
+  ]
+}

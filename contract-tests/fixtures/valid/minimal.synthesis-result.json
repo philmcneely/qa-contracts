@@ -1,6 +1,9 @@
 {
   "schema_version": "1.0",
   "test_file": "x",
-  "manifest": { "reused": [], "new": [] },
+  "manifest": {
+    "reused": [],
+    "new": []
+  },
   "warnings": []
 }

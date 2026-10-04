@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0",
   "ticket_id": "AUTH-101",
-  "test_file": "import pytest\n\n# generated test file text\n",
+  "test_file": "import { test } from '@playwright/test';\n\n// generated test file text\n",
   "manifest": {
     "reused": [
       {
         "step_id": "step_0123456789abcdef01234567",
         "kind": "action",
-        "language": "python",
+        "language": "typescript",
         "name": "submit_credentials",
         "page_object": "LoginPage",
         "intent": "Submit email and password",
@@ -17,13 +17,13 @@
     "new": [
       {
         "kind": "assertion",
-        "language": "python",
+        "language": "typescript",
         "name": "sees_dashboard",
         "intent": "Dashboard is shown",
         "page_object": "DashboardPage",
         "params": [],
         "body": [
-          "await expect(self.page.get_by_role('heading', name='Dashboard')).to_be_visible()"
+          "await expect(this.page.getByRole('heading', { name: 'Dashboard' })).toBeVisible();"
         ]
       }
     ]

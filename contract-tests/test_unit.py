@@ -107,10 +107,27 @@ def test_step_accepts_minimal_and_login(minimal_step, login_step):
     validate_step(login_step)
 
 
-@pytest.mark.parametrize("field", ["kind", "name", "intent", "page_object", "body"])
+@pytest.mark.parametrize("field", ["kind", "language", "name", "intent", "page_object", "body"])
 def test_step_missing_required_field(login_step, field):
     del login_step[field]
     _fails(validate_step, login_step, f"'{field}' is a required property")
+
+
+@pytest.mark.parametrize("language", ["python", "typescript", "javascript"])
+def test_step_accepts_each_language(login_step, language):
+    login_step["language"] = language
+    validate_step(login_step)
+
+
+@pytest.mark.parametrize("language", ["ruby", "Python", "", None, 3])
+def test_step_bad_language(login_step, language):
+    login_step["language"] = language
+    _fails(validate_step, login_step, "at /language:")
+
+
+def test_step_accepts_typescript_fixture(login_ts_step):
+    validate_step(login_ts_step)
+    assert login_ts_step["language"] == "typescript"
 
 
 def test_step_params_optional(login_step):
@@ -203,6 +220,21 @@ def test_sr_new_assertion_with_params_rejected(login_sr):
 def test_sr_reused_item_path(login_sr):
     del login_sr["manifest"]["reused"][0]["step_id"]
     _fails(validate_synthesis_result, login_sr, "at /manifest/reused/0:", "'step_id' is a required property")
+
+
+def test_sr_reused_requires_language(login_sr):
+    del login_sr["manifest"]["reused"][0]["language"]
+    _fails(validate_synthesis_result, login_sr, "at /manifest/reused/0:", "'language' is a required property")
+
+
+def test_sr_reused_bad_language(login_sr):
+    login_sr["manifest"]["reused"][0]["language"] = "ruby"
+    _fails(validate_synthesis_result, login_sr, "at /manifest/reused/0/language:")
+
+
+def test_sr_new_step_requires_language(login_sr):
+    del login_sr["manifest"]["new"][0]["language"]
+    _fails(validate_synthesis_result, login_sr, "at /manifest/new/0:", "'language' is a required property")
 
 
 def test_sr_reused_score_range(login_sr):

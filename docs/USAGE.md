@@ -13,11 +13,19 @@ without breaking its neighbors. No LLM, no network.
 | 2 | Test-Case Designer -> Automation Synthesizer | Test Cases (`schemas/test-cases.schema.json`) | `validate_test_cases(obj)` |
 | 3 | Synthesizer / Runner <-> Step Library | `search` / `promote` / `stats` API (`contracts/step-library-api.md`); its `step` payloads are Steps | `validate_step(obj)` for the Step |
 | 4 | Automation Synthesizer -> Verify & Promote Runner | Synthesis Result `{schema_version, ticket_id?, test_file, manifest{reused,new}, warnings}` (`schemas/synthesis-result.schema.json`) | `validate_synthesis_result(obj)` |
-| - | shared by 3 and 4 | Step: `{kind, name, intent, page_object, params?, body}` (`schemas/step.schema.json`) | `validate_step(obj)` |
+| - | shared by 3 and 4 | Step: `{kind, language, name, intent, page_object, params?, body}` (`schemas/step.schema.json`) | `validate_step(obj)` |
 
 `manifest.new` holds full Steps (the Runner promotes them on green);
-`manifest.reused` holds references `{step_id, kind, name, page_object, intent, score}`
+`manifest.reused` holds references `{step_id, kind, language, name, page_object, intent, score}`
 to steps already in the library. An assertion Step takes no `params`.
+
+`language` is required on every Step and every reused reference, one of
+`python`, `typescript`, `javascript`. A Step's `body` lines are written in that
+language (for example `await self.page.get_by_role(...).click()` for `python`,
+`await this.page.getByRole(...).click();` for `typescript`/`javascript`), so a
+reuse is only valid when the reference's `language` matches the test being
+generated. Use the same value in `manifest.new` and `manifest.reused` for a
+given target.
 
 ## Install in a component repo
 

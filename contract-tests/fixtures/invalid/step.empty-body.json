@@ -1,1 +1,1 @@
-{"kind":"action","name":"go","intent":"go","page_object":"P","body":[]}
+{"kind": "action", "name": "go", "intent": "go", "page_object": "P", "body": [], "language": "python"}

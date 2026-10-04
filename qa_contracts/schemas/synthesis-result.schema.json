@@ -25,10 +25,11 @@
     "reused_ref": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["step_id", "kind", "name", "page_object", "intent", "score"],
+      "required": ["step_id", "kind", "language", "name", "page_object", "intent", "score"],
       "properties": {
         "step_id": { "type": "string", "minLength": 1 },
         "kind": { "enum": ["action", "assertion"] },
+        "language": { "enum": ["python", "typescript", "javascript"] },
         "name": { "type": "string", "pattern": "^[a-z_][a-z0-9_]*$" },
         "page_object": { "type": "string", "pattern": "^[A-Z][A-Za-z0-9]*$" },
         "intent": { "type": "string", "pattern": "\\S" },

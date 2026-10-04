@@ -96,3 +96,17 @@ def test_synthesis_result_rejects_cross_contract_payloads(minimal_spec, minimal_
             validate_synthesis_result(other)
     with pytest.raises(ContractError):
         validate_step(minimal_sr)
+
+
+def test_language_is_required_on_step_and_reused_ref(minimal_step, minimal_sr):
+    del minimal_step["language"]
+    with pytest.raises(ContractError) as exc:
+        validate_step(minimal_step)
+    assert "'language' is a required property" in str(exc.value)
+    minimal_sr["manifest"]["reused"] = [{
+        "step_id": "s1", "kind": "action", "name": "go",
+        "page_object": "P", "intent": "go", "score": 0.5,
+    }]
+    with pytest.raises(ContractError) as exc:
+        validate_synthesis_result(minimal_sr)
+    assert "at /manifest/reused/0:" in str(exc.value)

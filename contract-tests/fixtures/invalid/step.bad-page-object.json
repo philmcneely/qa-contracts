@@ -1,1 +1,1 @@
-{"kind":"action","name":"go","intent":"go","page_object":"login_page","body":["await self.page.click('x')"]}
+{"kind": "action", "name": "go", "intent": "go", "page_object": "login_page", "body": ["await self.page.click('x')"], "language": "python"}

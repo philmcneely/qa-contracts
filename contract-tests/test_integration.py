@@ -29,6 +29,8 @@ REASONS = {
     "step.bad-page-object.json": "at /page_object:",
     "step.assertion-with-params.json": "at /params:",
     "step.duplicate-params.json": "at /params:",
+    "step.missing-language.json": "'language' is a required property",
+    "step.bad-language.json": "at /language:",
     "step.extra-field.json": "Additional properties",
     "sr.missing-manifest.json": "'manifest' is a required property",
     "sr.wrong-schema-version.json": "at /schema_version:",
@@ -37,6 +39,7 @@ REASONS = {
     "sr.new-bare-string.json": "at /manifest/new/0:",
     "sr.new-step-missing-body.json": "at /manifest/new/0:",
     "sr.reused-missing-step-id.json": "'step_id' is a required property",
+    "sr.reused-missing-language.json": "'language' is a required property",
     "sr.reused-score-out-of-range.json": "at /manifest/reused/0/score:",
     "sr.warnings-not-strings.json": "at /warnings/0:",
 }
@@ -65,6 +68,18 @@ def test_invalid_fixture_fails_with_reason(path):
     with pytest.raises(ContractError) as exc:
         _validator(path)(load_json(path))
     assert REASONS[path.name] in str(exc.value)
+
+
+def test_valid_fixtures_cover_every_language_family():
+    languages = set()
+    for path in fixture_files("valid"):
+        data = load_json(path)
+        if fixture_kind(path) == "step":
+            languages.add(data["language"])
+        elif fixture_kind(path) == "sr":
+            m = data["manifest"]
+            languages |= {s["language"] for s in m["reused"] + m["new"]}
+    assert {"python", "typescript"} <= languages
 
 
 def test_every_reason_has_a_fixture():

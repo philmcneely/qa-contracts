@@ -1,7 +1,10 @@
 {
   "kind": "assertion",
+  "language": "python",
   "name": "sees_dashboard",
   "intent": "Dashboard is shown",
   "page_object": "DashboardPage",
-  "body": ["await expect(self.page.get_by_role('heading', name='Dashboard')).to_be_visible()"]
+  "body": [
+    "await expect(self.page.get_by_role('heading', name='Dashboard')).to_be_visible()"
+  ]
 }

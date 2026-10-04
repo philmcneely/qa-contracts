@@ -1,1 +1,1 @@
-{"schema_version":"1.0","test_file":"x","manifest":{"reused":[{"step_id":"s","kind":"action","name":"go","page_object":"P","intent":"go","score":1.5}],"new":[]},"warnings":[]}
+{"schema_version": "1.0", "test_file": "x", "manifest": {"reused": [{"step_id": "s", "kind": "action", "name": "go", "page_object": "P", "intent": "go", "score": 1.5, "language": "python"}], "new": []}, "warnings": []}

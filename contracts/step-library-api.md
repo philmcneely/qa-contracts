@@ -31,7 +31,7 @@ recorded so later synthesis and healing can prefer the known-good locator for a 
 intent. Append-only; written only by the Verify & Promote Runner.
 
 - `record_heal(heal, provenance) -> {heal_id, created}`
-- `lookup_heals(page_url: str, intent: str, k: int) -> [{heal_id, heal, score, provenance}]`
+- `lookup_heals(page_url: str, intent: str, k: int = 5) -> [{heal_id, heal, score, provenance}]`
 
 **Heal** (request body `heal`, and each `lookup_heals[].heal`):
 
